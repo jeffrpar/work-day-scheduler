@@ -1,5 +1,21 @@
 const saveBtnEl = $('.saveBtn');
 
+var localNotes = JSON.parse(localStorage.getItem('noteStorage'));
+
+var initialNotes = {
+  h09: "",
+  h10: "",
+  h11: "",
+  h12: "",
+  h13: "",
+  h14: "",
+  h15: "",
+  h16: "",
+  h17: ""
+};
+
+var savedNotes = localNotes || initialNotes;
+
   // Function to update the current date and time
 setInterval(function () {
   // Get the current date and time using Day.js
@@ -29,18 +45,19 @@ $(function () {
 
     // Extract the hour-x part from the id
     var hourId = timeBlockId.split('-')[1];
+    console.log(hourId);
+    var fieldName = "h" + hourId;
 
     // Get the user input from the textarea within the time-block
     var userInput = timeBlock.find('textarea').val();
+    savedNotes[fieldName] = userInput;
 
     // Save the hour and user input in local storage
-    localStorage.setItem('hourId', hourId);
-    localStorage.setItem('userInput', userInput);
-
-    // Optionally, you can display a message or perform other actions
-    alert('User input saved in local storage!');
+    localStorage.setItem('noteStorage', JSON.stringify(savedNotes));
   });
 
+  // Put getitem here!!!
+  
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the

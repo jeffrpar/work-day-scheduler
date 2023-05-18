@@ -16,7 +16,8 @@ var initialNotes = {
 
 var savedNotes = localNotes || initialNotes;
 
-  // Function to update the current date and time
+// TODO: Add code to display the current date in the header of the page.
+// Function to update the current date and time
 setInterval(function () {
   // Get the current date and time using Day.js
   var currentDateTime = dayjs().format('dddd, MMMM D YYYY h:mm:ss A');
@@ -45,19 +46,30 @@ $(function () {
 
     // Extract the hour-x part from the id
     var hourId = timeBlockId.split('-')[1];
-    console.log(hourId);
     var fieldName = "h" + hourId;
 
     // Get the user input from the textarea within the time-block
     var userInput = timeBlock.find('textarea').val();
     savedNotes[fieldName] = userInput;
 
-    // Save the hour and user input in local storage
+    // Save the user input in local storage
     localStorage.setItem('noteStorage', JSON.stringify(savedNotes));
   });
 
-  // Put getitem here!!!
+  // TODO: Add code to get any user input that was saved in localStorage and set
+  // the values of the corresponding textarea elements. HINT: How can the id
+  // attribute of each time-block be used to do this?
+
+  // Put localstorage getitem here!!!
+  // Loop through the notes object and update the text areas
+  for (var hour in localNotes) {
+    var textareaId = '#hour-' + hour.slice(1);
+    console.log(textareaId);
+    var description = localNotes[hour];
   
+    $(textareaId).find('.description').val(description);
+  }
+
   // TODO: Add code to apply the past, present, or future class to each time
   // block by comparing the id to the current hour. HINTS: How can the id
   // attribute of each time-block be used to conditionally add or remove the
@@ -82,10 +94,4 @@ $(function () {
         timeBlock.addClass('future').removeClass('past present');
       }
     });
-
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
 });
